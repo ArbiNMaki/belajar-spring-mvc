@@ -15,38 +15,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class HelloControllerTest {
+class DateControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void helloGuest() throws Exception {
+    void date() throws Exception {
         mockMvc.perform(
-                get("/hello")
+                get("/date").queryParam("date", "2024-07-03")
         ).andExpectAll(
                 status().isOk(),
-                content().string(Matchers.containsString("Hello Guest"))
-        );
-    }
-
-    @Test
-    void helloName() throws Exception {
-        mockMvc.perform(
-                get("/hello").queryParam("name", "Arbi")
-        ).andExpectAll(
-                status().isOk(),
-                content().string(Matchers.containsString("Hello Arbi"))
-        );
-    }
-
-    @Test
-    void helloPost() throws Exception {
-        mockMvc.perform(
-                post("/hello")
-                        .queryParam("name", "Arbi")
-        ).andExpectAll(
-                status().isMethodNotAllowed()
+                content().string(Matchers.containsString("Date : 20240703"))
         );
     }
 }

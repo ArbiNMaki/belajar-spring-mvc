@@ -1,6 +1,5 @@
 package com.spring.mvc.controller;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,38 +14,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class HelloControllerTest {
+class CodeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void helloGuest() throws Exception {
+    void deleteProduct() throws Exception {
         mockMvc.perform(
-                get("/hello")
+                delete("/products/1")
         ).andExpectAll(
-                status().isOk(),
-                content().string(Matchers.containsString("Hello Guest"))
-        );
-    }
-
-    @Test
-    void helloName() throws Exception {
-        mockMvc.perform(
-                get("/hello").queryParam("name", "Arbi")
-        ).andExpectAll(
-                status().isOk(),
-                content().string(Matchers.containsString("Hello Arbi"))
-        );
-    }
-
-    @Test
-    void helloPost() throws Exception {
-        mockMvc.perform(
-                post("/hello")
-                        .queryParam("name", "Arbi")
-        ).andExpectAll(
-                status().isMethodNotAllowed()
+                status().isAccepted()
         );
     }
 }

@@ -7,46 +7,37 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.MockMvcBuilder.*;
+import static org.junit.jupiter.api.Assertions.*;import static org.springframework.test.web.servlet.MockMvcBuilder.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class HelloControllerTest {
+class HeaderControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void helloGuest() throws Exception {
+    void headerOk() throws Exception {
         mockMvc.perform(
-                get("/hello")
+                get("/header/token")
+                        .header("X-TOKEN", "ARBI")
         ).andExpectAll(
                 status().isOk(),
-                content().string(Matchers.containsString("Hello Guest"))
+                content().string(Matchers.containsString("OK"))
         );
     }
 
     @Test
-    void helloName() throws Exception {
+    void headerKo() throws Exception {
         mockMvc.perform(
-                get("/hello").queryParam("name", "Arbi")
+                get("/header/token")
+                        .header("X-TOKEN", "KALISTA")
         ).andExpectAll(
                 status().isOk(),
-                content().string(Matchers.containsString("Hello Arbi"))
-        );
-    }
-
-    @Test
-    void helloPost() throws Exception {
-        mockMvc.perform(
-                post("/hello")
-                        .queryParam("name", "Arbi")
-        ).andExpectAll(
-                status().isMethodNotAllowed()
+                content().string(Matchers.containsString("KO"))
         );
     }
 }
