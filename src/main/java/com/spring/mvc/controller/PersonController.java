@@ -1,6 +1,8 @@
 package com.spring.mvc.controller;
 
 import com.spring.mvc.model.CreatePersonRequest;
+import com.spring.mvc.model.CreateSocialMediaRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,9 +18,13 @@ public class PersonController {
                  consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public String createPerson(@ModelAttribute CreatePersonRequest request) {
+    public String createPerson(@ModelAttribute @Valid CreatePersonRequest request) {
 
         System.out.println(request);
+
+        for (CreateSocialMediaRequest socialMedia : request.getSocialMedias()) {
+            System.out.println(socialMedia.getName() + " : " + socialMedia.getLocation());
+        }
 
         return new StringBuilder().append("Success create person ")
                 .append(request.getFirstName()).append(" ")
